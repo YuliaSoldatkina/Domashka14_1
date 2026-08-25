@@ -38,8 +38,10 @@ def category(first_product: Product, second_product: Product) -> Category:
     """Создаёт тестовую категорию с двумя товарами."""
     return Category(
         name="Смартфоны",
-        description="Смартфоны, как средство не только коммуникации, "
-        "но и получения удовольствия от качественного фото",
+        description=(
+            "Смартфоны, как средство не только коммуникации, "
+            "но и получения удовольствия от качественного фото"
+        ),
         products=[first_product, second_product],
     )
 
@@ -47,12 +49,32 @@ def category(first_product: Product, second_product: Product) -> Category:
 def test_category_initialization(category: Category) -> None:
     """Проверяет корректность создания категории."""
     assert category.name == "Смартфоны"
-    assert (
-        category.description
-        == "Смартфоны, как средство не только коммуникации, "
+    assert category.description == (
+        "Смартфоны, как средство не только коммуникации, "
         "но и получения удовольствия от качественного фото"
     )
-    assert len(category.products) == 2
+
+
+def test_products_getter(category: Category) -> None:
+    """Проверяет строковое представление товаров категории."""
+    expected_products = (
+        "Смартфон, 180000.0 руб. Остаток: 5 шт.\n"
+        "Samsung Galaxy C23 Ultra, 180000.0 руб. Остаток: 8 шт.\n"
+    )
+
+    assert category.products == expected_products
+
+
+def test_add_product(
+    category: Category,
+    first_product: Product,
+) -> None:
+    """Проверяет добавление товара и подсчёт товаров."""
+    result = category.add_product(first_product)
+
+    assert result is None
+    assert Category.product_count == 3
+    assert category.products.count("Смартфон") == 2
 
 
 def test_category_count(first_product: Product) -> None:

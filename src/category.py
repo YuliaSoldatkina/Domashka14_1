@@ -15,7 +15,25 @@ class Category:
     ) -> None:
         self.name = name
         self.description = description
-        self.products = products
+        self.__products = products
 
         Category.category_count += 1
         Category.product_count += len(products)
+
+    def add_product(self, product: Product) -> None:
+        """Добавляет товар в категорию."""
+        self.__products.append(product)
+        Category.product_count += 1
+
+    @property
+    def products(self) -> str:
+        """Возвращает товары категории строкой."""
+        products_list = ""
+
+        for product in self.__products:
+            products_list += (
+                f"{product.name}, {product.price} руб. "
+                f"Остаток: {product.quantity} шт.\n"
+            )
+
+        return products_list
