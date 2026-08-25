@@ -59,7 +59,7 @@ def test_products_getter(category: Category) -> None:
     """Проверяет строковое представление товаров категории."""
     expected_products = (
         "Смартфон, 180000.0 руб. Остаток: 5 шт.\n"
-        "Samsung Galaxy C23 Ultra, 180000.0 руб. Остаток: 8 шт.\n"
+        "Samsung Galaxy C23 Ultra, 180000.0 руб. Остаток: 8 шт."
     )
 
     assert category.products == expected_products

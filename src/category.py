@@ -28,12 +28,8 @@ class Category:
     @property
     def products(self) -> str:
         """Возвращает товары категории строкой."""
-        products_list = ""
-
-        for product in self.__products:
-            products_list += (
-                f"{product.name}, {product.price} руб. "
-                f"Остаток: {product.quantity} шт.\n"
-            )
-
-        return products_list
+        return "\n".join(
+            f"{product.name}, {product.price} руб. "
+            f"Остаток: {product.quantity} шт."
+            for product in self.__products
+        )
