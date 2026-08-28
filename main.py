@@ -31,7 +31,17 @@ if __name__ == "__main__":
         [product1, product2, product3],
     )
 
+    print("Товары в категории:")
     print(category1.products)
+    print()
+
+    print("Категория:")
+    print(category1)
+    print()
+
+    print("Суммарная стоимость запасов первого и второго товаров:")
+    print(product1 + product2)
+    print()
 
     product4 = Product(
         '55" QLED 4K',
@@ -40,8 +50,18 @@ if __name__ == "__main__":
         7,
     )
     category1.add_product(product4)
+
+    print("Товары после добавления нового товара:")
     print(category1.products)
+    print()
+
+    print("Категория после добавления товара:")
+    print(category1)
+    print()
+
+    print("Количество объектов товаров во всех категориях:")
     print(category1.product_count)
+    print()
 
     new_product = Product.new_product(
         {
@@ -51,16 +71,19 @@ if __name__ == "__main__":
             "quantity": 5,
         }
     )
-    print(new_product.name)
-    print(new_product.description)
-    print(new_product.price)
-    print(new_product.quantity)
+
+    print("Товар, созданный через new_product:")
+    print(new_product)
+    print()
 
     new_product.price = 800
+    print("Цена после установки значения 800:")
     print(new_product.price)
 
     new_product.price = -100
+    print("Цена после попытки установить -100:")
     print(new_product.price)
 
     new_product.price = 0
+    print("Цена после попытки установить 0:")
     print(new_product.price)

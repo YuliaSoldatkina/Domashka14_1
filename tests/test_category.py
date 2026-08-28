@@ -98,3 +98,8 @@ def test_product_count(
     Category("Телевизоры", "Категория телевизоров", [])
 
     assert Category.product_count == 2
+
+
+def test_category_str(category: Category) -> None:
+    """Проверяет строковое представление категории."""
+    assert str(category) == "Смартфоны, количество продуктов: 13 шт."

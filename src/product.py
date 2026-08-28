@@ -30,3 +30,14 @@ class Product:
     def new_product(cls, product_data: dict) -> "Product":
         """Создаёт объект Product из словаря."""
         return cls(**product_data)
+
+    def __str__(self) -> str:
+        """Возвращает строковое представление товара."""
+        return (
+            f"{self.name}, {self.price} руб. "
+            f"Остаток: {self.quantity} шт."
+        )
+
+    def __add__(self, other: "Product") -> float:
+        """Возвращает суммарную стоимость запасов двух товаров."""
+        return self.price * self.quantity + other.price * other.quantity
