@@ -62,3 +62,20 @@ def test_price_setter_with_invalid_price(
 
     assert captured.out == "Цена не должна быть нулевая или отрицательная\n"
     assert product.price == 180000.0
+
+
+def test_product_str(product: Product) -> None:
+    """Проверяет строковое представление товара."""
+    assert str(product) == "Смартфон, 180000.0 руб. Остаток: 5 шт."
+
+
+def test_product_add(product: Product) -> None:
+    """Проверяет сложение стоимости запасов двух товаров."""
+    second_product = Product(
+        name="Iphone 15",
+        description="512GB, Gray space",
+        price=210000.0,
+        quantity=8,
+    )
+
+    assert product + second_product == 2580000.0
