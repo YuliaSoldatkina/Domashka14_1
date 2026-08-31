@@ -1,5 +1,5 @@
 from src.category import Category
-from src.product import Product
+from src.product import LawnGrass, Product, Smartphone
 
 
 if __name__ == "__main__":
@@ -87,3 +87,71 @@ if __name__ == "__main__":
     new_product.price = 0
     print("Цена после попытки установить 0:")
     print(new_product.price)
+
+    smartphone1 = Smartphone(
+        name="iPhone 15",
+        description="Смартфон Apple",
+        price=100000.0,
+        quantity=10,
+        efficiency=95.0,
+        model="iPhone 15",
+        memory=256,
+        color="Черный",
+    )
+    smartphone2 = Smartphone(
+        name="Samsung Galaxy S24",
+        description="Смартфон Samsung",
+        price=120000.0,
+        quantity=5,
+        efficiency=90.0,
+        model="Galaxy S24",
+        memory=512,
+        color="Серый",
+    )
+    lawn_grass = LawnGrass(
+        name="Газонная трава",
+        description="Семена для газона",
+        price=500.0,
+        quantity=20,
+        country="Россия",
+        germination_period="7 дней",
+        color="Зеленый",
+    )
+
+    smartphone_category = Category(
+        name="Смартфоны нового поколения",
+        description="Современные смартфоны с высокой производительностью",
+        products=[smartphone1, smartphone2],
+    )
+    garden_category = Category(
+        name="Товары для сада",
+        description="Товары для обустройства сада и газона",
+        products=[lawn_grass],
+    )
+
+    print()
+    print("Смартфон с дополнительными характеристиками:")
+    print(smartphone1)
+    print(f"Модель: {smartphone1.model}")
+    print(f"Память: {smartphone1.memory} ГБ")
+    print(f"Цвет: {smartphone1.color}")
+    print(f"Производительность: {smartphone1.efficiency}")
+    print()
+
+    print("Газонная трава с дополнительными характеристиками:")
+    print(lawn_grass)
+    print(f"Страна-производитель: {lawn_grass.country}")
+    print(f"Срок прорастания: {lawn_grass.germination_period}")
+    print(f"Цвет: {lawn_grass.color}")
+    print()
+
+    print("Суммарная стоимость запасов двух смартфонов:")
+    print(smartphone1 + smartphone2)
+    print()
+
+    print("Категория смартфонов:")
+    print(smartphone_category)
+    print()
+
+    print("Категория товаров для сада:")
+    print(garden_category)
