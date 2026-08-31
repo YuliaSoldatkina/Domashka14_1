@@ -1,6 +1,6 @@
 import pytest
 
-from src.product import Product
+from src.product import LawnGrass, Product, Smartphone
 
 
 @pytest.fixture
@@ -79,3 +79,82 @@ def test_product_add(product: Product) -> None:
     )
 
     assert product + second_product == 2580000.0
+
+
+@pytest.fixture
+def smartphone() -> Smartphone:
+    """Создаёт тестовый смартфон."""
+    return Smartphone(
+        name="iPhone 15",
+        description="Смартфон Apple",
+        price=100000.0,
+        quantity=10,
+        efficiency=95.0,
+        model="iPhone 15",
+        memory=256,
+        color="Черный",
+    )
+
+
+@pytest.fixture
+def lawn_grass() -> LawnGrass:
+    """Создаёт тестовую газонную траву."""
+    return LawnGrass(
+        name="Газонная трава",
+        description="Семена для газона",
+        price=500.0,
+        quantity=20,
+        country="Россия",
+        germination_period="7 дней",
+        color="Зеленый",
+    )
+
+
+def test_smartphone_initialization(smartphone: Smartphone) -> None:
+    """Проверяет создание смартфона и его наследование от Product."""
+    assert isinstance(smartphone, Product)
+    assert smartphone.name == "iPhone 15"
+    assert smartphone.description == "Смартфон Apple"
+    assert smartphone.price == 100000.0
+    assert smartphone.quantity == 10
+    assert smartphone.efficiency == 95.0
+    assert smartphone.model == "iPhone 15"
+    assert smartphone.memory == 256
+    assert smartphone.color == "Черный"
+
+
+def test_lawn_grass_initialization(lawn_grass: LawnGrass) -> None:
+    """Проверяет создание газонной травы и её наследование от Product."""
+    assert isinstance(lawn_grass, Product)
+    assert lawn_grass.name == "Газонная трава"
+    assert lawn_grass.description == "Семена для газона"
+    assert lawn_grass.price == 500.0
+    assert lawn_grass.quantity == 20
+    assert lawn_grass.country == "Россия"
+    assert lawn_grass.germination_period == "7 дней"
+    assert lawn_grass.color == "Зеленый"
+
+
+def test_add_same_product_classes(smartphone: Smartphone) -> None:
+    """Проверяет сложение двух смартфонов."""
+    second_smartphone = Smartphone(
+        name="Samsung Galaxy S24",
+        description="Смартфон Samsung",
+        price=120000.0,
+        quantity=5,
+        efficiency=90.0,
+        model="Galaxy S24",
+        memory=512,
+        color="Серый",
+    )
+
+    assert smartphone + second_smartphone == 1600000.0
+
+
+def test_add_different_product_classes(
+    smartphone: Smartphone,
+    lawn_grass: LawnGrass,
+) -> None:
+    """Проверяет запрет сложения товаров разных классов."""
+    with pytest.raises(TypeError):
+        smartphone + lawn_grass

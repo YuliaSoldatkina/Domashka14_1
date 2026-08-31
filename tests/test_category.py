@@ -1,7 +1,7 @@
 import pytest
 
 from src.category import Category
-from src.product import Product
+from src.product import LawnGrass, Product, Smartphone
 
 
 @pytest.fixture(autouse=True)
@@ -103,3 +103,43 @@ def test_product_count(
 def test_category_str(category: Category) -> None:
     """Проверяет строковое представление категории."""
     assert str(category) == "Смартфоны, количество продуктов: 13 шт."
+
+
+def test_add_product_inheritors(category: Category) -> None:
+    """Проверяет добавление наследников Product в категорию."""
+    smartphone = Smartphone(
+        name="iPhone 15",
+        description="Смартфон Apple",
+        price=100000.0,
+        quantity=10,
+        efficiency=95.0,
+        model="iPhone 15",
+        memory=256,
+        color="Черный",
+    )
+    lawn_grass = LawnGrass(
+        name="Газонная трава",
+        description="Семена для газона",
+        price=500.0,
+        quantity=20,
+        country="Россия",
+        germination_period="7 дней",
+        color="Зеленый",
+    )
+
+    category.add_product(smartphone)
+    category.add_product(lawn_grass)
+
+    assert Category.product_count == 4
+    assert "iPhone 15" in category.products
+    assert "Газонная трава" in category.products
+
+
+def test_add_not_product_to_category(category: Category) -> None:
+    """Проверяет запрет добавления объекта, не являющегося Product."""
+    initial_product_count = Category.product_count
+
+    with pytest.raises(TypeError):
+        category.add_product("Это не товар")
+
+    assert Category.product_count == initial_product_count
