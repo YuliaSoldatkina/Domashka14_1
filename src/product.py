@@ -1,13 +1,53 @@
-class Product:
+from abc import ABC, abstractmethod
+
+
+class BaseProduct(ABC):
+    """Абстрактный базовый класс для продуктов."""
+
+    @abstractmethod
+    def __str__(self) -> str:
+        """Возвращает строковое представление продукта."""
+        pass
+
+
+class PrintMixin:
+    """Миксин для вывода информации о создании объекта."""
+
+    def __init__(self, *args, **kwargs) -> None:
+        parameters = ", ".join(
+            [repr(argument) for argument in args]
+            + [
+                f"{key}={value!r}"
+                for key, value in kwargs.items()
+            ]
+        )
+        print(f"{self.__class__.__name__}({parameters})")
+        super().__init__()
+
+    def __repr__(self) -> str:
+        """Возвращает строковое представление объекта."""
+        parameters = ", ".join(
+            f"{key}={value!r}" for key, value in self.__dict__.items()
+        )
+        return f"{self.__class__.__name__}({parameters})"
+
+
+class Product(PrintMixin, BaseProduct):
     """Класс для представления товара интернет-магазина."""
 
     def __init__(
-        self,
-        name: str,
-        description: str,
-        price: float,
-        quantity: int,
+            self,
+            name: str,
+            description: str,
+            price: float,
+            quantity: int,
     ) -> None:
+        super().__init__(
+            name=name,
+            description=description,
+            price=price,
+            quantity=quantity,
+        )
         self.name = name
         self.description = description
         self.__price = price
@@ -41,9 +81,14 @@ class Product:
     def __add__(self, other: "Product") -> float:
         """Возвращает суммарную стоимость запасов двух товаров."""
         if type(self) is not type(other):
-            raise TypeError("Складывать можно только товары одного класса")
+            raise TypeError(
+                "Складывать можно только товары одного класса"
+            )
 
-        return self.price * self.quantity + other.price * other.quantity
+        return (
+            self.price * self.quantity
+            + other.price * other.quantity
+        )
 
 
 class Smartphone(Product):
@@ -71,14 +116,14 @@ class LawnGrass(Product):
     """Класс для представления газонной травы."""
 
     def __init__(
-        self,
-        name: str,
-        description: str,
-        price: float,
-        quantity: int,
-        country: str,
-        germination_period: str,
-        color: str,
+            self,
+            name: str,
+            description: str,
+            price: float,
+            quantity: int,
+            country: str,
+            germination_period: str,
+            color: str,
     ) -> None:
         super().__init__(name, description, price, quantity)
         self.country = country
