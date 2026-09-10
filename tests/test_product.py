@@ -230,3 +230,55 @@ def test_lawn_grass_mixin_output(
     assert "LawnGrass(" in captured.out
     assert "'Газонная трава'" in captured.out
     assert "500.0" in captured.out
+
+
+def test_product_with_zero_quantity_raises_value_error() -> None:
+    """Проверяет, что при нулевом количестве выбрасывается ValueError."""
+    with pytest.raises(ValueError) as exc_info:
+        Product(
+            name="Тестовый продукт",
+            description="Описание",
+            price=1000.0,
+            quantity=0,
+        )
+
+    assert str(exc_info.value) == "Товар с нулевым количеством не может быть добавлен"
+
+
+def test_category_average_price() -> None:
+    """Проверяет подсчёт среднего ценника в категории."""
+    from src.category import Category
+
+    product1 = Product(
+        name="Товар 1",
+        description="Описание 1",
+        price=1000.0,
+        quantity=5,
+    )
+    product2 = Product(
+        name="Товар 2",
+        description="Описание 2",
+        price=2000.0,
+        quantity=3,
+    )
+
+    category = Category(
+        name="Тестовая категория",
+        description="Тест",
+        products=[product1, product2],
+    )
+
+    assert category.average_price() == 1500.0
+
+
+def test_category_average_price_empty_category() -> None:
+    """Проверяет, что для пустой категории возвращается 0."""
+    from src.category import Category
+
+    category = Category(
+        name="Пустая категория",
+        description="Тест",
+        products=[],
+    )
+
+    assert category.average_price() == 0.0
