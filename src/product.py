@@ -53,6 +53,9 @@ class Product(PrintMixin, BaseProduct):
         self.__price = price
         self.quantity = quantity
 
+        if self.quantity == 0:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
+
     @property
     def price(self) -> float:
         """Возвращает цену товара."""
